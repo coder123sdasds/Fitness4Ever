@@ -259,22 +259,19 @@ textarea{min-height:80px;resize:vertical}
     <h3>Congrats!</h3>
     <p id="doneMsg"></p>
     <a class="btn" id="pay" target="_blank" rel="noopener"></a>
-    <a class="btn ghost" id="sendMail">Send my details to Ireneo</a>
   </div>
 </dialog>
 
 <script>
-// Put your real email address here so sign-ups come to you.
-var CONTACT_EMAIL = "Reno4fitness@gmail.com";
-// Paste your Formspree form link here, like https://formspree.io/f/xxxxxxxx
-var FORMSPREE_URL = "";
+// Formspree sends each sign-up to your email.
+var FORMSPREE_URL = "https://formspree.io/f/xljblkqe";
 
 var PLANS = {
   workout:  {name:'Workout Plan ($50)', sub:'Add your name and number, then you’ll continue to payment.',
-             msg:'You’ve taken the first step. Complete your payment to get your workout plan.',
+             msg:'You’ve taken the first step. Taking you to secure payment now…',
              pay:'https://buy.stripe.com/8x2cN5d4tbl08S27iT4ZG0d', payLabel:'Continue to payment'},
   nutrition:{name:'Nutrition Plan ($50/mo)', sub:'Add your name and number, then you’ll continue to payment.',
-             msg:'You’ve taken the first step. Complete your payment to get your nutrition plan.',
+             msg:'You’ve taken the first step. Taking you to secure payment now…',
              pay:'https://buy.stripe.com/8x2aEX4xXgFkgku5aL4ZG0e', payLabel:'Continue to payment'},
   training: {name:'Personal Training (custom quote)', sub:'Tell me who you are and I’ll reach out with your custom quote.',
              msg:'You’ve taken the first step. Ireneo will reach out soon with your custom quote.', pay:null}
@@ -292,7 +289,6 @@ function openDlg(key){
   document.getElementById('goalWrap').style.display = key === 'training' ? 'grid' : 'none';
   formView.style.display = 'block'; done.style.display = 'none'; done.classList.remove('show');
   pay.style.display = 'none';
-  document.getElementById('sendMail').style.display = 'none';
   dlg.showModal();
 }
 document.querySelectorAll('[data-open]').forEach(function(b){
@@ -310,18 +306,14 @@ f.addEventListener('submit', function(e){
   if (p.pay){ pay.href = p.pay; pay.textContent = p.payLabel; pay.style.display = 'inline-block'; }
   done.style.display = 'block'; void done.offsetWidth; done.classList.add('show');
   confetti();
-  var url = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent("New sign-up: " + p.name + " from " + name) +
-    "&body=" + encodeURIComponent("Name: " + name + "\nPhone: " + phone + "\nPlan: " + p.name + (goal ? "\nLooking for: " + goal : ""));
-  var sm = document.getElementById('sendMail');
-  sm.href = url; sm.style.display = cur === 'training' ? 'inline-block' : 'none';
-  var sent = false;
-  if (FORMSPREE_URL){
-    fetch(FORMSPREE_URL, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body: JSON.stringify({name:name, phone:phone, plan:p.name, goal:goal, _subject:'New sign-up: ' + p.name + ' from ' + name})})
-      .then(function(r){ if (r.ok){ sent = true; sm.style.display = 'none'; } })
-      .catch(function(){});
-  }
-  setTimeout(function(){ if (!sent) window.location.href = url; f.reset(); }, 2800);
+  var post = FORMSPREE_URL ? fetch(FORMSPREE_URL, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body: JSON.stringify({name:name, phone:phone, plan:p.name, goal:goal, _subject:'New sign-up: ' + p.name + ' from ' + name})}).catch(function(){}) : Promise.resolve();
+  var wait = new Promise(function(r){ setTimeout(r, 2800); });
+  var cap = new Promise(function(r){ setTimeout(r, 4500); });
+  Promise.all([wait, Promise.race([post, cap])]).then(function(){
+    f.reset();
+    if (p.pay) window.location.href = p.pay;
+  });
 });
 
 function confetti(){
