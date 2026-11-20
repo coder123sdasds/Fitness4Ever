@@ -43,6 +43,7 @@ p{margin:0 0 1rem;max-width:62ch}
 .btn{display:inline-block;padding:.95rem 1.7rem;border-radius:6px;font:800 1rem var(--body);text-decoration:none;border:2px solid var(--acc);cursor:pointer;background:var(--acc);color:var(--on-acc);text-align:center}
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
 .btn.sm{padding:.6rem 1.1rem;font-size:.95rem}
+.btn.big{font-size:1.25rem;padding:1.25rem 2.4rem}
 
 .hero{padding:2.5rem 0 4rem}
 .eyebrow{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.85rem;color:var(--acc);margin-bottom:1rem}
@@ -135,15 +136,15 @@ textarea{min-height:80px;resize:vertical}
 <div class="wrap">
   <header class="bar">
     <a class="logo" href="#top">Reno<b>2</b>Fit</a>
-    <a class="btn sm" href="#plans">See the plans</a>
+    <button class="btn sm" data-open="call">Get a call</button>
   </header>
   <div class="hero" id="top">
     <div class="eyebrow">Coach Ireneo Santos</div>
     <h1>Stop guessing.<br><em>Start getting results.</em></h1>
     <p class="lead">A workout plan built for your body and your schedule. A nutrition plan built for your goal. $50 each, or get personal training with a custom quote.</p>
     <div class="cta">
-      <a class="btn" href="#plans">See the plans</a>
-      <a class="btn ghost" href="#how">How it works</a>
+      <button class="btn big" data-open="call">Get a call to talk about your goals</button>
+      <a class="btn ghost big" href="#plans">See the plans</a>
     </div>
   </div>
 </div>
@@ -238,7 +239,7 @@ textarea{min-height:80px;resize:vertical}
 
 <footer><div class="wrap">© <span id="y"></span> Reno2Fit · Ireneo Santos</div></footer>
 
-<div class="sticky"><span>Plans from $50</span><a class="btn sm" href="#plans">See the plans</a></div>
+<div class="sticky"><span>Plans from $50</span><button class="btn sm" data-open="call">Get a call</button></div>
 
 <dialog id="dlg" aria-labelledby="dt">
   <button class="x" id="close" aria-label="Close">&times;</button>
@@ -267,6 +268,8 @@ textarea{min-height:80px;resize:vertical}
 var FORMSPREE_URL = "https://formspree.io/f/xljblkqe";
 
 var PLANS = {
+  call:     {name:'Call about your goals', sub:'Add your name and number and I’ll call you to talk about your goals.',
+             msg:'You’ve taken the first step. Ireneo will call you soon to talk about your goals.', pay:null},
   workout:  {name:'Workout Plan ($50)', sub:'Add your name and number, then you’ll continue to payment.',
              msg:'You’ve taken the first step. Taking you to secure payment now…',
              pay:'https://buy.stripe.com/8x2cN5d4tbl08S27iT4ZG0d', payLabel:'Continue to payment'},
@@ -286,7 +289,7 @@ function openDlg(key){
   cur = key; var p = PLANS[key];
   document.getElementById('chip').textContent = p.name;
   document.getElementById('sub').textContent = p.sub;
-  document.getElementById('goalWrap').style.display = key === 'training' ? 'grid' : 'none';
+  document.getElementById('goalWrap').style.display = key === 'training' || key === 'call' ? 'grid' : 'none';
   formView.style.display = 'block'; done.style.display = 'none'; done.classList.remove('show');
   pay.style.display = 'none';
   dlg.showModal();
