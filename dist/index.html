@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reno2Fit | Workout Plans, Nutrition Plans &amp; Personal Training</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F7F9; --surface:#FFFFFF; --ink:#101114; --muted:#52576A; --line:#DDE0E8;
+  --acc:#D93216; --on-acc:#FFFFFF; --panel:#101114; --on-panel:#F2F3F7; --panel-muted:#A9AEBF;
+  --head:'Anton','Impact','Arial Narrow',sans-serif;
+  --body:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B0C10; --surface:#15171E; --ink:#F2F3F7; --muted:#A9AEBF; --line:#272A35;
+    --acc:#FF6A4D; --on-acc:#101114; --panel:#1B1E27; --on-panel:#F2F3F7; --panel-muted:#A9AEBF;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B0C10; --surface:#15171E; --ink:#F2F3F7; --muted:#A9AEBF; --line:#272A35;
+  --acc:#FF6A4D; --on-acc:#101114; --panel:#1B1E27;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 1.0625rem/1.6 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.25rem}
+h1,h2,h3{font-family:var(--head);font-weight:400;text-transform:uppercase;line-height:1;margin:0}
+h2{font-size:clamp(2.4rem,6vw,3.8rem);margin-bottom:.9rem}
+p{margin:0 0 1rem;max-width:62ch}
+
+.bar{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0}
+.logo{font:400 1.7rem var(--head);text-transform:uppercase;text-decoration:none;letter-spacing:.02em}
+.logo b{color:var(--acc);font-weight:400}
+.btn{display:inline-block;padding:.95rem 1.7rem;border-radius:6px;font:800 1rem var(--body);text-decoration:none;border:2px solid var(--acc);cursor:pointer;background:var(--acc);color:var(--on-acc);text-align:center}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn.sm{padding:.6rem 1.1rem;font-size:.95rem}
+
+.hero{padding:2.5rem 0 4rem}
+.eyebrow{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.85rem;color:var(--acc);margin-bottom:1rem}
+.hero h1{font-size:clamp(3.6rem,14vw,9.5rem);line-height:.92}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero .lead{font-size:1.3rem;color:var(--muted);margin:1.5rem 0 0;max-width:48ch}
+.cta{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.75rem}
+
+.strip{background:var(--acc);color:var(--on-acc);font:400 1.35rem var(--head);text-transform:uppercase;letter-spacing:.04em}
+.strip .wrap{display:flex;gap:2.2rem;justify-content:center;flex-wrap:wrap;padding-top:.7rem;padding-bottom:.7rem}
+
+section{padding:4.5rem 0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.75rem;display:flex;flex-direction:column}
+.card h3{font-size:2.1rem}
+.card .for{color:var(--muted);margin:.5rem 0 1.2rem}
+.price{font:400 4.6rem/1 var(--head)}
+.price small{font:700 1rem var(--body);color:var(--muted);margin-left:.3rem;text-transform:none}
+.card ul{list-style:none;padding:0;margin:1.4rem 0 2rem;flex:1}
+.card li{padding:.55rem 0 .55rem 1.8rem;border-top:1px solid var(--line);position:relative}
+.card li::before{content:"";position:absolute;left:.25rem;top:1.1rem;width:.65rem;height:.36rem;border-left:3px solid var(--acc);border-bottom:3px solid var(--acc);transform:rotate(-45deg)}
+.tagline{display:inline-block;align-self:flex-start;background:var(--ink);color:var(--bg);font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:4px;margin-bottom:1rem}
+.card.feat{border:2px solid var(--acc)}
+
+.how{background:var(--panel);color:var(--on-panel)}
+.how p{color:var(--panel-muted)}
+.steps{list-style:none;counter-reset:s;padding:0;margin:2.2rem 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.steps li{counter-increment:s;border-top:4px solid var(--acc);padding-top:1.1rem}
+.steps li::before{content:"0" counter(s);font:400 3.4rem var(--head);color:var(--acc);display:block;line-height:1}
+.steps h3{font-size:1.9rem;margin:.4rem 0 .5rem}
+.steps p{margin:0}
+
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem}
+.why div{border-left:4px solid var(--acc);padding-left:1rem}
+.why strong{display:block;font:400 1.6rem var(--head);text-transform:uppercase;margin-bottom:.3rem}
+.why p{margin:0;color:var(--muted)}
+
+details{border-top:1px solid var(--line);padding:1.1rem 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{font-weight:800;cursor:pointer;font-size:1.1rem}
+details p{margin:.7rem 0 0;color:var(--muted)}
+.faq{max-width:760px;margin-top:1.5rem}
+footer{padding:2.5rem 0 6rem;color:var(--muted);font-size:.95rem}
+
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding:.7rem 1.25rem calc(.7rem + env(safe-area-inset-bottom,0px));display:none;justify-content:space-between;align-items:center;gap:1rem}
+.sticky span{font-weight:800}
+
+/* modal */
+dialog{border:0;border-radius:16px;padding:2rem;width:min(440px,calc(100% - 2rem));background:var(--surface);color:var(--ink);overflow-y:auto;overflow-x:hidden;max-height:calc(100vh - 2rem);max-height:calc(100dvh - 2rem);-webkit-overflow-scrolling:touch;position:fixed}
+dialog::backdrop{background:rgba(5,6,10,.7)}
+dialog h3{font-size:2rem;margin-bottom:.5rem}
+dialog .sub{color:var(--muted);margin-bottom:1.25rem}
+.chip{display:inline-block;background:var(--acc);color:var(--on-acc);font-weight:800;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:4px;margin-bottom:.9rem}
+.x{position:absolute;top:.8rem;right:.9rem;background:none;border:0;font-size:1.8rem;line-height:1;color:var(--muted);cursor:pointer;padding:.2rem .5rem;z-index:2}
+form{display:grid;gap:1rem}
+label{font-weight:800;display:grid;gap:.35rem}
+input,textarea{font:inherit;font-weight:500;padding:.85rem;border-radius:6px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+textarea{min-height:80px;resize:vertical}
+.note{color:var(--muted);font-size:.9rem;margin:0}
+#goalWrap{display:none}
+#done{display:none;text-align:center;padding:1.5rem 0 .5rem;position:relative;z-index:1}
+#done h3{margin:1rem 0 .5rem}
+#done p{margin:0 auto 1rem}
+#pay{display:none;margin-top:.5rem;opacity:0}
+#sendMail{display:none;margin-top:.5rem}
+.check{width:96px;height:96px;display:block;margin:0 auto}
+.check circle{fill:none;stroke:var(--acc);stroke-width:5;stroke-dasharray:289;stroke-dashoffset:289}
+.check path{fill:none;stroke:var(--acc);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60}
+#done.show .check circle{animation:draw .7s ease forwards}
+#done.show .check path{animation:draw .45s .55s ease forwards}
+#done.show h3,#done.show p{animation:rise .6s .9s both}
+#done.show #pay{animation:rise .6s 1.3s both}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+
+@media(max-width:900px){
+  .cards,.steps,.why{grid-template-columns:1fr}
+  .sticky{display:flex}
+  .bar .btn{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  #done.show .check circle,#done.show .check path{animation:none;stroke-dashoffset:0}
+  #done.show h3,#done.show p,#done.show #pay{animation:none;opacity:1}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="logo" href="#top">Reno<b>2</b>Fit</a>
+    <a class="btn sm" href="#plans">See the plans</a>
+  </header>
+  <div class="hero" id="top">
+    <div class="eyebrow">Coach Ireneo Santos</div>
+    <h1>Stop guessing.<br><em>Start getting results.</em></h1>
+    <p class="lead">A workout plan built for your body and your schedule. A nutrition plan built for your goal. $50 each, or get personal training with a custom quote.</p>
+    <div class="cta">
+      <a class="btn" href="#plans">See the plans</a>
+      <a class="btn ghost" href="#how">How it works</a>
+    </div>
+  </div>
+</div>
+
+<div class="strip"><div class="wrap"><span>Workout plans</span><span>Nutrition plans</span><span>Personal training</span><span>Real coach</span></div></div>
+
+<section id="plans">
+  <div class="wrap">
+    <h2>Pick your plan</h2>
+    <p>Every plan is built from scratch for you, never copy and pasted.</p>
+    <div class="cards">
+      <article class="card">
+        <span class="tagline">One-time</span>
+        <h3>Workout Plan</h3>
+        <p class="for">Know exactly what to do every time you train.</p>
+        <div class="price">$50<small>one-time</small></div>
+        <ul>
+          <li>Built around your goal and experience level</li>
+          <li>Matched to your schedule and equipment</li>
+          <li>Every exercise with sets, reps and rest</li>
+          <li>Progression so you keep improving</li>
+          <li>Gym or home, your choice</li>
+        </ul>
+        <button class="btn" data-open="workout">Get my workout plan</button>
+      </article>
+      <article class="card">
+        <span class="tagline">Monthly</span>
+        <h3>Nutrition Plan</h3>
+        <p class="for">Eat for your goal without the confusion.</p>
+        <div class="price">$50<small>per month</small></div>
+        <ul>
+          <li>Daily calorie and protein targets for your goal</li>
+          <li>Meal ideas you’ll actually want to eat</li>
+          <li>Grocery lists to make shopping easy</li>
+          <li>Updated every month as you progress</li>
+          <li>Cancel any time</li>
+        </ul>
+        <button class="btn" data-open="nutrition">Get my nutrition plan</button>
+      </article>
+      <article class="card feat">
+        <span class="tagline">Custom</span>
+        <h3>Personal Training</h3>
+        <p class="for">Coaching built around exactly what you want.</p>
+        <div class="price">Custom<small>quote</small></div>
+        <ul>
+          <li>Price based on what you want and what I can offer</li>
+          <li>Training, nutrition, or both</li>
+          <li>Support level that fits you</li>
+          <li>Goals, schedule and plan made just for you</li>
+        </ul>
+        <button class="btn" data-open="training">Get my quote</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <h2>3 steps. That’s it.</h2>
+    <p>No long sign-up, no guessing, no confusing apps.</p>
+    <ol class="steps">
+      <li><h3>Pick your plan</h3><p>Choose a workout plan, a nutrition plan, or custom personal training.</p></li>
+      <li><h3>Tell me who you are</h3><p>Add your name and number so I know who’s signing up.</p></li>
+      <li><h3>Get started</h3><p>Pay for your plan, or get a custom quote for personal training.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Why Reno2Fit</h2>
+    <div class="why">
+      <div><strong>Built for you</strong><p>Your goal, your schedule, your equipment. No cookie-cutter templates.</p></div>
+      <div><strong>A real coach</strong><p>You’re working with a real person who knows your plan.</p></div>
+      <div><strong>Simple pricing</strong><p>$50 for a plan, or a custom quote for personal training.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details><summary>What happens after I sign up?</summary><p>Enter your name and number, then you’ll continue to secure payment for your plan. I’ll use your details to get in touch about your plan.</p></details>
+      <details><summary>How much is personal training?</summary><p>It’s a custom quote. The price depends on what you want and what I can offer, so tap “Get my quote” and I’ll reach out.</p></details>
+      <details><summary>Is this good for beginners?</summary><p>Yes. Every plan is matched to your experience level, from first-timers to people who’ve trained for years.</p></details>
+      <details><summary>Do I need a gym?</summary><p>No. Tell me what you have, whether that’s a full gym, a few dumbbells or just your bodyweight, and I’ll build around it.</p></details>
+      <details><summary>Can I cancel the nutrition plan?</summary><p>Yes, any time. It’s month to month.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">© <span id="y"></span> Reno2Fit · Ireneo Santos</div></footer>
+
+<div class="sticky"><span>Plans from $50</span><a class="btn sm" href="#plans">See the plans</a></div>
+
+<dialog id="dlg" aria-labelledby="dt">
+  <button class="x" id="close" aria-label="Close">&times;</button>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div id="formView">
+    <span class="chip" id="chip"></span>
+    <h3 id="dt">Let’s get you started</h3>
+    <p class="sub" id="sub"></p>
+    <form id="f">
+      <label>Name<input name="name" required autocomplete="name"></label>
+      <label>Phone number<input name="phone" type="tel" required autocomplete="tel" inputmode="tel"></label>
+      <label id="goalWrap">What are you looking for? (optional)<textarea name="goal" placeholder="Fat loss, muscle, nutrition help…"></textarea></label>
+      <button class="btn" type="submit">Submit</button>
+    </form>
+  </div>
+  <div id="done" role="status">
+    <svg class="check" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><path d="M30 52l14 14 27-30"/></svg>
+    <h3>Congrats!</h3>
+    <p id="doneMsg"></p>
+    <a class="btn" id="pay" target="_blank" rel="noopener"></a>
+    <a class="btn ghost" id="sendMail">Send my details to Ireneo</a>
+  </div>
+</dialog>
+
+<script>
+// Put your real email address here so sign-ups come to you.
+var CONTACT_EMAIL = "Reno4fitness@gmail.com";
+// Paste your Formspree form link here, like https://formspree.io/f/xxxxxxxx
+var FORMSPREE_URL = "";
+
+var PLANS = {
+  workout:  {name:'Workout Plan ($50)', sub:'Add your name and number, then you’ll continue to payment.',
+             msg:'You’ve taken the first step. Complete your payment to get your workout plan.',
+             pay:'https://buy.stripe.com/8x2cN5d4tbl08S27iT4ZG0d', payLabel:'Continue to payment'},
+  nutrition:{name:'Nutrition Plan ($50/mo)', sub:'Add your name and number, then you’ll continue to payment.',
+             msg:'You’ve taken the first step. Complete your payment to get your nutrition plan.',
+             pay:'https://buy.stripe.com/8x2aEX4xXgFkgku5aL4ZG0e', payLabel:'Continue to payment'},
+  training: {name:'Personal Training (custom quote)', sub:'Tell me who you are and I’ll reach out with your custom quote.',
+             msg:'You’ve taken the first step. Ireneo will reach out soon with your custom quote.', pay:null}
+};
+var cur = 'workout';
+var dlg = document.getElementById('dlg'), formView = document.getElementById('formView'),
+    done = document.getElementById('done'), f = document.getElementById('f'),
+    pay = document.getElementById('pay');
+document.getElementById('y').textContent = new Date().getFullYear();
+
+function openDlg(key){
+  cur = key; var p = PLANS[key];
+  document.getElementById('chip').textContent = p.name;
+  document.getElementById('sub').textContent = p.sub;
+  document.getElementById('goalWrap').style.display = key === 'training' ? 'grid' : 'none';
+  formView.style.display = 'block'; done.style.display = 'none'; done.classList.remove('show');
+  pay.style.display = 'none';
+  document.getElementById('sendMail').style.display = 'none';
+  dlg.showModal();
+}
+document.querySelectorAll('[data-open]').forEach(function(b){
+  b.addEventListener('click', function(){ openDlg(b.getAttribute('data-open')); });
+});
+document.getElementById('close').addEventListener('click', function(){ dlg.close(); });
+dlg.addEventListener('click', function(e){ if(e.target === dlg) dlg.close(); });
+
+f.addEventListener('submit', function(e){
+  e.preventDefault();
+  var d = new FormData(f), p = PLANS[cur];
+  var name = d.get('name'), phone = d.get('phone'), goal = d.get('goal') || '';
+  formView.style.display = 'none';
+  document.getElementById('doneMsg').textContent = p.msg;
+  if (p.pay){ pay.href = p.pay; pay.textContent = p.payLabel; pay.style.display = 'inline-block'; }
+  done.style.display = 'block'; void done.offsetWidth; done.classList.add('show');
+  confetti();
+  var url = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent("New sign-up: " + p.name + " from " + name) +
+    "&body=" + encodeURIComponent("Name: " + name + "\nPhone: " + phone + "\nPlan: " + p.name + (goal ? "\nLooking for: " + goal : ""));
+  var sm = document.getElementById('sendMail');
+  sm.href = url; sm.style.display = cur === 'training' ? 'inline-block' : 'none';
+  var sent = false;
+  if (FORMSPREE_URL){
+    fetch(FORMSPREE_URL, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({name:name, phone:phone, plan:p.name, goal:goal, _subject:'New sign-up: ' + p.name + ' from ' + name})})
+      .then(function(r){ if (r.ok){ sent = true; sm.style.display = 'none'; } })
+      .catch(function(){});
+  }
+  setTimeout(function(){ if (!sent) window.location.href = url; f.reset(); }, 2800);
+});
+
+function confetti(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var c = document.getElementById('fx'), ctx = c.getContext('2d');
+  var w = c.width = dlg.clientWidth, h = c.height = dlg.clientHeight;
+  var colors = ['#D93216','#FF6A4D','#FFD23F','#101114','#6F82FF'];
+  var ps = [];
+  for (var i = 0; i < 110; i++){
+    ps.push({x:w/2, y:h*0.36, vx:(Math.random()-.5)*11, vy:-Math.random()*11-3,
+      s:Math.random()*7+4, r:Math.random()*6, vr:(Math.random()-.5)*.35, col:colors[i % colors.length]});
+  }
+  var t0 = null;
+  (function frame(t){
+    if (!t0) t0 = t;
+    var el = t - t0;
+    ctx.clearRect(0,0,w,h);
+    ps.forEach(function(p){
+      p.vy += .28; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
+      ctx.globalAlpha = Math.max(0, 1 - el/2600);
+      ctx.fillStyle = p.col; ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);
+      ctx.restore();
+    });
+    if (el < 2600) requestAnimationFrame(frame); else ctx.clearRect(0,0,w,h);
+  })(performance.now());
+}
+</script>
+</body>
+</html>
